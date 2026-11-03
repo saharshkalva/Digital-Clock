@@ -1,0 +1,133 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    min-height: 100vh;
+    background: #080b14;
+    font-family: Arial, sans-serif;
+    color: white;
+}
+
+.container {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.clock-card {
+    width: 100%;
+    max-width: 650px;
+    padding: 50px 25px;
+    text-align: center;
+    background: #111827;
+    border: 1px solid #263449;
+    border-radius: 25px;
+    box-shadow: 0 0 50px rgba(0, 195, 255, 0.08);
+}
+
+.top {
+    color: #00d9ff;
+    font-size: 13px;
+    letter-spacing: 3px;
+    font-weight: bold;
+}
+
+.status-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: #00ff99;
+    border-radius: 50%;
+    margin-right: 7px;
+}
+
+.greeting {
+    margin-top: 45px;
+    color: #9ca3af;
+    font-size: 15px;
+}
+
+.clock {
+    margin-top: 20px;
+    font-size: clamp(48px, 11vw, 85px);
+    font-weight: bold;
+    letter-spacing: 3px;
+    color: #00d9ff;
+    text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+    font-variant-numeric: tabular-nums;
+}
+
+.period {
+    color: #00d9ff;
+    font-size: 18px;
+    margin-top: 8px;
+}
+
+.divider {
+    width: 70%;
+    height: 1px;
+    background: #263449;
+    margin: 30px auto;
+}
+
+.day {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.date {
+    margin-top: 10px;
+    color: #9ca3af;
+    font-size: 16px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 40px;
+}
+
+button {
+    padding: 13px 20px;
+    border: 1px solid #00d9ff;
+    border-radius: 10px;
+    background: transparent;
+    color: #00d9ff;
+    cursor: pointer;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #00d9ff;
+    color: #080b14;
+}
+
+.footer {
+    margin-top: 45px;
+    color: #64748b;
+    font-size: 10px;
+    letter-spacing: 2px;
+}
+
+@media (max-width: 480px) {
+    .clock-card {
+        padding: 35px 15px;
+    }
+
+    .top {
+        font-size: 11px;
+    }
+
+    .day {
+        font-size: 23px;
+    }
+}
