@@ -1,109 +1,288 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Clock Dashboard 2.1</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d18">
+  <title>Clock Dashboard 3.0</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <div class="app">
+    <header class="topbar">
+      <a class="brand" href="#">
+        <span class="brand-icon">◷</span>
+        <span>TIME<span class="brand-accent">SPACE</span></span>
+        <small>3.0</small>
+      </a>
+      <div class="top-actions">
+        <button id="themeBtn" class="icon-button" title="Change theme">◐</button>
+        <button id="fullscreenBtn" class="icon-button" title="Fullscreen">⛶</button>
+      </div>
+    </header>
 
-<header>
-    <h1>⚡ CLOCK DASHBOARD</h1>
-    <p>Your personal time management dashboard</p>
-</header>
+    <nav class="tabs">
+      <button class="tab active" data-target="home">⌂ Home</button>
+      <button class="tab" data-target="world">◎ World clocks</button>
+      <button class="tab" data-target="tools">⏱ Tools</button>
+      <button class="tab" data-target="alarms">♧ Alarms</button>
+      <button class="tab" data-target="calendar">▦ Calendar</button>
+      <button class="tab" data-target="settings">⚙ Settings</button>
+    </nav>
 
-<main>
-    <!-- DIGITAL CLOCK -->
-    <section class="card">
-        <h2>🌐 Digital Clock</h2>
-        <div id="clock" class="big-time">00:00:00</div>
-        <div id="period">AM</div>
-        <p id="day">Monday</p>
-        <p id="date">January 1, 2026</p>
-        <button id="formatBtn">Switch to 24H</button>
-    </section>
-
-    <!-- STOPWATCH -->
-    <section class="card">
-        <h2>⏱️ Stopwatch</h2>
-        <div id="stopwatch" class="big-time">00:00:00.00</div>
-
-        <div class="buttons">
-            <button id="startWatch">Start</button>
-            <button id="pauseWatch">Pause</button>
-            <button id="resetWatch">Reset</button>
-            <button id="lapWatch">Lap</button>
+    <main>
+      <!-- HOME -->
+      <section class="page active" id="home">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">YOUR PERSONAL TIME HUB</p>
+            <h1 class="page-title">Dashboard</h1>
+          </div>
+          <span class="live-indicator">● LIVE</span>
         </div>
 
-        <h3>Laps</h3>
-        <ul id="laps"></ul>
-    </section>
+        <div class="grid two">
+          <article class="card hero">
+            <div class="hero-top">
+              <span class="eyebrow">LOCAL TIME</span>
+              <span id="localZone" class="zone-label">Your timezone</span>
+            </div>
+            <div class="hero-time">
+              <span id="mainClock">00:00:00</span>
+              <span id="ampm" class="ampm"></span>
+            </div>
+            <h2 id="todayText" class="today-text">Loading date...</h2>
+            <div class="hero-bottom">
+              <div class="mini-stat">
+                <span>DAY OF YEAR</span>
+                <strong id="dayOfYear">—</strong>
+              </div>
+              <div class="mini-stat">
+                <span>WEEK NUMBER</span>
+                <strong id="weekNumber">—</strong>
+              </div>
+            </div>
+          </article>
 
-    <!-- COUNTDOWN TIMER -->
-    <section class="card">
-        <h2>⏳ Countdown Timer</h2>
-
-        <div class="timer-inputs">
-            <input id="minutes" type="number" min="0" max="999" value="5" placeholder="Minutes">
-            <input id="seconds" type="number" min="0" max="59" value="0" placeholder="Seconds">
+          <article class="card">
+            <div class="section-heading compact">
+              <div>
+                <p class="eyebrow">QUICK OVERVIEW</p>
+                <h2>Coming up</h2>
+              </div>
+              <span class="card-symbol">◷</span>
+            </div>
+            <div class="quick-list">
+              <div class="quick-card">
+                <span class="quick-icon">🌍</span>
+                <div><strong>World clocks</strong><small id="homeWorld">Loading...</small></div>
+              </div>
+              <div class="quick-card">
+                <span class="quick-icon">⏰</span>
+                <div><strong>Active alarms</strong><small id="homeAlarms">Loading...</small></div>
+              </div>
+              <div class="quick-card">
+                <span class="quick-icon">🍅</span>
+                <div><strong>Focus timer</strong><small>Stay focused, one task at a time</small></div>
+              </div>
+            </div>
+          </article>
         </div>
 
-        <div id="countdown" class="big-time">05:00</div>
+        <div class="section-heading">
+          <div><p class="eyebrow">AT A GLANCE</p><h2>World time</h2></div>
+          <button class="text-button" data-go="world">View all →</button>
+        </div>
+        <div id="worldGrid" class="world-grid"></div>
+      </section>
 
-        <div class="buttons">
-            <button id="startTimer">Start</button>
-            <button id="pauseTimer">Pause</button>
-            <button id="resetTimer">Reset</button>
+      <!-- WORLD CLOCKS -->
+      <section class="page" id="world">
+        <div class="section-heading">
+          <div><p class="eyebrow">AROUND THE PLANET</p><h1 class="page-title">World clocks</h1></div>
+        </div>
+        <article class="card">
+          <p class="muted">Add cities to keep track of time around the world.</p>
+          <div class="add-city-row">
+            <select id="citySelect">
+              <option value="">Choose a city</option>
+              <option value="Asia/Kolkata">Hyderabad / India</option>
+              <option value="Europe/London">London</option>
+              <option value="America/New_York">New York</option>
+              <option value="Asia/Tokyo">Tokyo</option>
+              <option value="Australia/Sydney">Sydney</option>
+              <option value="Europe/Barcelona">Barcelona</option>
+              <option value="Europe/Paris">Paris</option>
+              <option value="Asia/Dubai">Dubai</option>
+              <option value="Asia/Singapore">Singapore</option>
+              <option value="America/Los_Angeles">Los Angeles</option>
+              <option value="Africa/Cairo">Cairo</option>
+              <option value="Asia/Seoul">Seoul</option>
+            </select>
+            <button id="addCityBtn" class="primary-button">+ Add city</button>
+          </div>
+        </article>
+        <div id="worldList" class="world-grid"></div>
+      </section>
+
+      <!-- TOOLS -->
+      <section class="page" id="tools">
+        <div class="section-heading">
+          <div><p class="eyebrow">MEASURE YOUR TIME</p><h1 class="page-title">Time tools</h1></div>
         </div>
 
-        <p id="timerStatus">Ready to start</p>
-        <p class="sound-note">🔔 A sound plays when the timer finishes.</p>
-    </section>
-
-    <!-- WORLD CLOCK -->
-    <section class="card">
-        <h2>🌍 World Clock</h2>
-
-        <div class="world-grid">
-            <div class="city">
-                <h3>Hyderabad 🇮🇳</h3>
-                <p id="india">--:--:--</p>
+        <div class="grid two">
+          <article class="card tool-card">
+            <div class="section-heading compact">
+              <div><p class="eyebrow">PRECISION TIMER</p><h2>Stopwatch</h2></div>
+              <span class="card-symbol">⏱</span>
             </div>
-
-            <div class="city">
-                <h3>London 🇬🇧</h3>
-                <p id="london">--:--:--</p>
+            <div id="stopwatchDisplay" class="tool-display">00:00:00.00</div>
+            <div class="button-row">
+              <button id="watchStart" class="primary-button">Start</button>
+              <button id="watchPause" class="secondary-button">Pause</button>
+              <button id="watchReset" class="secondary-button">Reset</button>
+              <button id="watchLap" class="secondary-button">Lap</button>
             </div>
+            <h3 class="subheading">Lap history</h3>
+            <div id="lapList" class="lap-list"><p class="muted">Your laps will appear here.</p></div>
+          </article>
 
-            <div class="city">
-                <h3>New York 🇺🇸</h3>
-                <p id="newyork">--:--:--</p>
+          <article class="card tool-card">
+            <div class="section-heading compact">
+              <div><p class="eyebrow">COUNTDOWN</p><h2>Timer</h2></div>
+              <span class="card-symbol">⌛</span>
             </div>
+            <div class="timer-input-row">
+              <input id="timerMinutes" type="number" min="0" max="999" value="5" aria-label="Timer minutes">
+              <span>:</span>
+              <input id="timerSeconds" type="number" min="0" max="59" value="0" aria-label="Timer seconds">
+            </div>
+            <div id="timerDisplay" class="tool-display">05:00</div>
+            <div class="progress-track"><div id="timerProgress" class="progress-fill"></div></div>
+            <p id="timerState" class="status-text">Ready</p>
+            <div class="preset-row">
+              <button class="preset" data-timer="1">1 min</button>
+              <button class="preset" data-timer="5">5 min</button>
+              <button class="preset" data-timer="10">10 min</button>
+              <button class="preset" data-timer="25">25 min</button>
+            </div>
+            <div class="button-row">
+              <button id="timerStart" class="primary-button">Start</button>
+              <button id="timerPause" class="secondary-button">Pause</button>
+              <button id="timerReset" class="secondary-button">Reset</button>
+            </div>
+            <p id="timerMessage" class="muted"></p>
+          </article>
 
-            <div class="city">
-                <h3>Tokyo 🇯🇵</h3>
-                <p id="tokyo">--:--:--</p>
+          <article class="card tool-card">
+            <div class="section-heading compact">
+              <div><p class="eyebrow">FOCUS SESSION</p><h2>Pomodoro</h2></div>
+              <span class="card-symbol">🍅</span>
             </div>
-
-            <div class="city">
-                <h3>Sydney 🇦🇺</h3>
-                <p id="sydney">--:--:--</p>
+            <div class="pomo-modes">
+              <button class="preset active" data-pomo="focus">Focus</button>
+              <button class="preset" data-pomo="short">Short break</button>
+              <button class="preset" data-pomo="long">Long break</button>
             </div>
-
-            <div class="city">
-                <h3>Barcelona 🇪🇸</h3>
-                <p id="barcelona">--:--:--</p>
+            <div id="pomoDisplay" class="tool-display">25:00</div>
+            <p id="pomoState" class="status-text">Ready to focus</p>
+            <div class="button-row">
+              <button id="pomoStart" class="primary-button">Start</button>
+              <button id="pomoPause" class="secondary-button">Pause</button>
+              <button id="pomoReset" class="secondary-button">Reset</button>
             </div>
+            <p id="pomoMessage" class="muted">Work in focused sessions and take regular breaks.</p>
+          </article>
         </div>
-    </section>
-</main>
+      </section>
 
-<footer>
-    MADE WITH HTML, CSS AND JAVASCRIPT
-    <p>Dark Clock Dashboard 2.1</p>
-</footer>
+      <!-- ALARMS -->
+      <section class="page" id="alarms">
+        <div class="section-heading">
+          <div><p class="eyebrow">DON'T MISS A MOMENT</p><h1 class="page-title">Alarms</h1></div>
+        </div>
+        <article class="card">
+          <h2>Create an alarm</h2>
+          <form id="alarmForm" class="alarm-form">
+            <label for="alarmTime">Alarm time</label>
+            <input id="alarmTime" type="time" required>
+            <label for="alarmLabel">Alarm name</label>
+            <input id="alarmLabel" type="text" maxlength="40" placeholder="e.g. Study time">
+            <button class="primary-button" type="submit">+ Add alarm</button>
+          </form>
+          <p class="muted">Alarms ring only while this dashboard is open in your browser.</p>
+        </article>
+        <div id="alarmList" class="alarm-list"></div>
+      </section>
 
-<script src="script.js"></script>
+      <!-- CALENDAR -->
+      <section class="page" id="calendar">
+        <div class="section-heading">
+          <div><p class="eyebrow">PLAN YOUR DAYS</p><h1 class="page-title">Calendar</h1></div>
+        </div>
+        <article class="card calendar-card">
+          <div class="calendar-header">
+            <button id="prevMonth" class="icon-button">←</button>
+            <h2 id="monthTitle">Month Year</h2>
+            <button id="nextMonth" class="icon-button">→</button>
+          </div>
+          <div id="calendarWeekdays" class="calendar-grid weekdays">
+            <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span>
+            <span>Thu</span><span>Fri</span><span>Sat</span>
+          </div>
+          <div id="calendarDays" class="calendar-grid"></div>
+          <div id="calendarSelected" class="calendar-selected">Select a date to see it here.</div>
+        </article>
+      </section>
+
+      <!-- SETTINGS -->
+      <section class="page" id="settings">
+        <div class="section-heading">
+          <div><p class="eyebrow">MAKE IT YOURS</p><h1 class="page-title">Settings</h1></div>
+        </div>
+        <article class="card settings-card">
+          <div class="setting-row">
+            <div><strong>Clock format</strong><small>Choose 12-hour or 24-hour time</small></div>
+            <select id="formatSelect">
+              <option value="12">12-hour</option>
+              <option value="24">24-hour</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div><strong>Accent theme</strong><small>Choose your dashboard colour</small></div>
+            <select id="accentSelect">
+              <option value="cyan">Cyan</option>
+              <option value="purple">Purple</option>
+              <option value="green">Green</option>
+              <option value="orange">Orange</option>
+              <option value="pink">Pink</option>
+            </select>
+          </div>
+          <div class="setting-row">
+            <div><strong>Sound effects</strong><small>Play sounds for timers and alarms</small></div>
+            <label class="switch"><input id="soundToggle" type="checkbox"><span></span></label>
+          </div>
+          <div class="setting-row">
+            <div><strong>24-hour world clocks</strong><small>Use 24-hour format for other cities</small></div>
+            <label class="switch"><input id="world24Toggle" type="checkbox"><span></span></label>
+          </div>
+          <div class="setting-row">
+            <div><strong>Reset settings</strong><small>Restore the default dashboard preferences</small></div>
+            <button id="resetSettings" class="danger-button">Reset</button>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>TIME<span class="brand-accent">SPACE</span> 3.0</span>
+      <span>Make every second count.</span>
+    </footer>
+  </div>
+
+  <div id="toast" class="toast" role="status"></div>
+  <script src="script.js"></script>
 </body>
 </html>
