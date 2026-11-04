@@ -1,7 +1,6 @@
-
-// =================================
+// =====================================
 // 1. DIGITAL CLOCK
-// =================================
+// =====================================
 
 const clock = document.getElementById("clock");
 const period = document.getElementById("period");
@@ -54,9 +53,9 @@ updateClock();
 setInterval(updateClock, 1000);
 
 
-// =================================
+// =====================================
 // 2. STOPWATCH
-// =================================
+// =====================================
 
 const stopwatch = document.getElementById("stopwatch");
 const laps = document.getElementById("laps");
@@ -68,8 +67,10 @@ let watchFrame = null;
 
 function formatStopwatch(ms) {
     const total = Math.floor(ms / 10);
+
     const hundredths = total % 100;
     const totalSeconds = Math.floor(total / 100);
+
     const seconds = totalSeconds % 60;
     const minutes = Math.floor(totalSeconds / 60) % 60;
     const hours = Math.floor(totalSeconds / 3600);
@@ -85,13 +86,15 @@ function formatStopwatch(ms) {
 function updateStopwatch() {
     if (!watchRunning) return;
 
-    const elapsed = watchElapsed + performance.now() - watchStart;
+    const elapsed =
+        watchElapsed + performance.now() - watchStart;
 
     stopwatch.textContent = formatStopwatch(elapsed);
 
     watchFrame = requestAnimationFrame(updateStopwatch);
 }
 
+// Start
 document.getElementById("startWatch").addEventListener("click", () => {
     if (watchRunning) return;
 
@@ -101,6 +104,7 @@ document.getElementById("startWatch").addEventListener("click", () => {
     updateStopwatch();
 });
 
+// Pause
 document.getElementById("pauseWatch").addEventListener("click", () => {
     if (!watchRunning) return;
 
@@ -108,9 +112,11 @@ document.getElementById("pauseWatch").addEventListener("click", () => {
     watchRunning = false;
 
     cancelAnimationFrame(watchFrame);
+
     stopwatch.textContent = formatStopwatch(watchElapsed);
 });
 
+// Reset
 document.getElementById("resetWatch").addEventListener("click", () => {
     watchRunning = false;
     watchElapsed = 0;
@@ -121,22 +127,26 @@ document.getElementById("resetWatch").addEventListener("click", () => {
     laps.innerHTML = "";
 });
 
+// Lap
 document.getElementById("lapWatch").addEventListener("click", () => {
     if (!watchRunning) return;
 
-    const elapsed = watchElapsed + performance.now() - watchStart;
+    const elapsed =
+        watchElapsed + performance.now() - watchStart;
 
     const li = document.createElement("li");
-    li.textContent = "Lap " + (laps.children.length + 1) +
+
+    li.textContent =
+        "Lap " + (laps.children.length + 1) +
         " — " + formatStopwatch(elapsed);
 
     laps.prepend(li);
 });
 
 
-// =================================
-// 3. COUNTDOWN TIMER
-// =================================
+// =====================================
+// 3. COUNTDOWN TIMER + SOUND
+// =====================================
 
 const minutesInput = document.getElementById("minutes");
 const secondsInput = document.getElementById("seconds");
@@ -148,8 +158,59 @@ let timerDeadline = 0;
 let timerRunning = false;
 let timerInterval = null;
 
+// Audio setup
+let audioContext = null;
+
+function prepareTimerSound() {
+    const AudioContextClass =
+        window.AudioContext || window.webkitAudioContext;
+
+    if (!AudioContextClass) {
+        return;
+    }
+
+    if (!audioContext) {
+        audioContext = new AudioContextClass();
+    }
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+}
+
+// Play a two-tone sound when the timer finishes
+function playTimerSound() {
+    if (!audioContext || audioContext.state !== "running") {
+        return;
+    }
+
+    const now = audioContext.currentTime;
+
+    [660, 880, 660, 880].forEach((frequency, index) => {
+        const oscillator = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+
+        oscillator.type = "sine";
+        oscillator.frequency.value = frequency;
+
+        const start = now + index * 0.3;
+
+        gain.gain.setValueAtTime(0.001, start);
+        gain.gain.exponentialRampToValueAtTime(0.3, start + 0.04);
+        gain.gain.exponentialRampToValueAtTime(0.001, start + 0.22);
+
+        oscillator.connect(gain);
+        gain.connect(audioContext.destination);
+
+        oscillator.start(start);
+        oscillator.stop(start + 0.23);
+    });
+}
+
+// Display the countdown
 function showCountdown(ms) {
     const totalSeconds = Math.ceil(ms / 1000);
+
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
 
@@ -158,24 +219,7 @@ function showCountdown(ms) {
         String(seconds).padStart(2, "0");
 }
 
-function stopTimer() {
-    clearInterval(timerInterval);
-    timerInterval = null;
-    timerRunning = false;
-}
-
-function updateCountdown() {
-    timerRemaining = Math.max(0, timerDeadline - Date.now());
-
-    showCountdown(timerRemaining);
-
-    if (timerRemaining <= 0) {
-        stopTimer();
-        timerStatus.textContent = "Time is up!";
-        alert("Your countdown has finished!");
-    }
-}
-
+// Read and validate the user's input
 function getInputTime() {
     const minutes = Number(minutesInput.value);
     const seconds = Number(secondsInput.value);
@@ -197,9 +241,38 @@ function getInputTime() {
     return (minutes * 60 + seconds) * 1000;
 }
 
+// Stop the timer interval
+function stopTimer() {
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+    timerRunning = false;
+}
+
+// Update the countdown
+function updateCountdown() {
+    timerRemaining = Math.max(0, timerDeadline - Date.now());
+
+    showCountdown(timerRemaining);
+
+    if (timerRemaining <= 0) {
+        stopTimer();
+
+        timerStatus.textContent = "🔔 Time is up!";
+
+        playTimerSound();
+    }
+}
+
+// Start button
 document.getElementById("startTimer").addEventListener("click", () => {
+    // Prepare audio after the user's click.
+    // Browsers require this before playing sound.
+    prepareTimerSound();
+
     if (timerRunning) return;
 
+    // If the previous countdown finished, load the input time again.
     if (timerRemaining <= 0) {
         timerRemaining = getInputTime();
 
@@ -214,21 +287,30 @@ document.getElementById("startTimer").addEventListener("click", () => {
 
     timerDeadline = Date.now() + timerRemaining;
     timerRunning = true;
+
     timerStatus.textContent = "Timer running";
 
-    timerInterval = setInterval(updateCountdown, 100);
+    updateCountdown();
+
+    if (timerRunning) {
+        timerInterval = setInterval(updateCountdown, 100);
+    }
 });
 
+// Pause button
 document.getElementById("pauseTimer").addEventListener("click", () => {
     if (!timerRunning) return;
 
     timerRemaining = Math.max(0, timerDeadline - Date.now());
 
     stopTimer();
+
     showCountdown(timerRemaining);
+
     timerStatus.textContent = "Timer paused";
 });
 
+// Reset button
 document.getElementById("resetTimer").addEventListener("click", () => {
     stopTimer();
 
@@ -239,9 +321,11 @@ document.getElementById("resetTimer").addEventListener("click", () => {
     }
 
     showCountdown(timerRemaining);
+
     timerStatus.textContent = "Ready to start";
 });
 
+// Update display when the user changes the input
 function updateInputDisplay() {
     if (timerRunning) return;
 
@@ -249,7 +333,9 @@ function updateInputDisplay() {
 
     if (value !== null) {
         timerRemaining = value;
+
         showCountdown(timerRemaining);
+
         timerStatus.textContent = "Ready to start";
     }
 }
@@ -260,9 +346,9 @@ secondsInput.addEventListener("change", updateInputDisplay);
 showCountdown(timerRemaining);
 
 
-// =================================
+// =====================================
 // 4. WORLD CLOCK
-// =================================
+// =====================================
 
 const cities = [
     {
@@ -284,6 +370,10 @@ const cities = [
     {
         id: "sydney",
         zone: "Australia/Sydney"
+    },
+    {
+        id: "barcelona",
+        zone: "Europe/Madrid"
     }
 ];
 
