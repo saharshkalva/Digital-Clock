@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -90,6 +89,7 @@ button {
     border-radius: 9px;
     cursor: pointer;
     transition: 0.2s;
+    font-size: 14px;
 }
 
 button:hover {
@@ -116,6 +116,12 @@ input {
 
 #timerStatus {
     color: #94a3b8;
+    margin-top: 12px;
+}
+
+.sound-note {
+    color: #64748b;
+    font-size: 13px;
     margin-top: 12px;
 }
 
