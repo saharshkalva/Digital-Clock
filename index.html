@@ -4,42 +4,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Digital Clock</title>
+    <title>Dark Clock Dashboard 2.0</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="container">
-        <div class="clock-card">
+<header>
+    <h1>⚡ CLOCK DASHBOARD</h1>
+    <p>Your personal time management dashboard</p>
+</header>
 
-            <div class="top">
-                <span class="status-dot"></span>
-                LIVE DIGITAL CLOCK
+<main>
+
+    <!-- DIGITAL CLOCK -->
+    <section class="card">
+        <h2>🌐 Digital Clock</h2>
+        <div id="clock" class="big-time">00:00:00</div>
+        <div id="period">AM</div>
+        <p id="day">Monday</p>
+        <p id="date">January 1, 2026</p>
+        <button id="formatBtn">Switch to 24H</button>
+    </section>
+
+    <!-- STOPWATCH -->
+    <section class="card">
+        <h2>⏱️ Stopwatch</h2>
+        <div id="stopwatch" class="big-time">00:00:00.00</div>
+
+        <div class="buttons">
+            <button id="startWatch">Start</button>
+            <button id="pauseWatch">Pause</button>
+            <button id="resetWatch">Reset</button>
+            <button id="lapWatch">Lap</button>
+        </div>
+
+        <h3>Laps</h3>
+        <ul id="laps"></ul>
+    </section>
+
+    <!-- COUNTDOWN TIMER -->
+    <section class="card">
+        <h2>⏳ Countdown Timer</h2>
+
+        <div class="timer-inputs">
+            <input id="minutes" type="number"
+                min="0" max="999" value="5" placeholder="Minutes">
+
+            <input id="seconds" type="number"
+                min="0" max="59" value="0" placeholder="Seconds">
+        </div>
+
+        <div id="countdown" class="big-time">05:00</div>
+
+        <div class="buttons">
+            <button id="startTimer">Start</button>
+            <button id="pauseTimer">Pause</button>
+            <button id="resetTimer">Reset</button>
+        </div>
+
+        <p id="timerStatus">Ready to start</p>
+    </section>
+
+    <!-- WORLD CLOCK -->
+    <section class="card">
+        <h2>🌍 World Clock</h2>
+
+        <div class="world-grid">
+
+            <div class="city">
+                <h3>Hyderabad 🇮🇳</h3>
+                <p id="india">--:--:--</p>
             </div>
 
-            <p class="greeting">Welcome to your dashboard</p>
-
-            <div id="clock" class="clock">00:00:00</div>
-
-            <div id="period" class="period">AM</div>
-
-            <div class="divider"></div>
-
-            <div id="day" class="day">Monday</div>
-            <div id="date" class="date">January 1, 2026</div>
-
-            <div class="buttons">
-                <button id="formatBtn">Switch to 24H</button>
-                <button id="fullscreenBtn">Full Screen</button>
+            <div class="city">
+                <h3>London 🇬🇧</h3>
+                <p id="london">--:--:--</p>
             </div>
 
-            <div class="footer">
-                MADE WITH HTML, CSS & JAVASCRIPT
+            <div class="city">
+                <h3>New York 🇺🇸</h3>
+                <p id="newyork">--:--:--</p>
+            </div>
+
+            <div class="city">
+                <h3>Tokyo 🇯🇵</h3>
+                <p id="tokyo">--:--:--</p>
+            </div>
+
+            <div class="city">
+                <h3>Sydney 🇦🇺</h3>
+                <p id="sydney">--:--:--</p>
             </div>
 
         </div>
-    </div>
+    </section>
 
-    <script src="script.js"></script>
+</main>
+
+<footer>
+    MADE WITH HTML, CSS AND JAVASCRIPT
+    <p>Dark Clock Dashboard 2.0</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
