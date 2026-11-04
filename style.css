@@ -6,104 +6,90 @@
 }
 
 body {
-    min-height: 100vh;
     background: #080b14;
-    font-family: Arial, sans-serif;
     color: white;
-}
-
-.container {
+    font-family: Arial, sans-serif;
     min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 20px;
 }
 
-.clock-card {
-    width: 100%;
-    max-width: 650px;
-    padding: 50px 25px;
+header {
     text-align: center;
+    padding: 35px 15px;
+}
+
+header h1 {
+    color: #00d9ff;
+    letter-spacing: 3px;
+}
+
+header p {
+    color: #94a3b8;
+    margin-top: 12px;
+}
+
+main {
+    width: 90%;
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.card {
     background: #111827;
     border: 1px solid #263449;
-    border-radius: 25px;
-    box-shadow: 0 0 50px rgba(0, 195, 255, 0.08);
+    border-radius: 18px;
+    padding: 30px 20px;
+    text-align: center;
+    box-shadow: 0 0 25px rgba(0, 217, 255, 0.04);
 }
 
-.top {
+.card h2 {
     color: #00d9ff;
-    font-size: 13px;
-    letter-spacing: 3px;
+    margin-bottom: 25px;
+}
+
+.big-time {
+    font-size: clamp(30px, 5vw, 48px);
     font-weight: bold;
-}
-
-.status-dot {
-    display: inline-block;
-    width: 8px;
-    height: 8px;
-    background: #00ff99;
-    border-radius: 50%;
-    margin-right: 7px;
-}
-
-.greeting {
-    margin-top: 45px;
-    color: #9ca3af;
-    font-size: 15px;
-}
-
-.clock {
-    margin-top: 20px;
-    font-size: clamp(48px, 11vw, 85px);
-    font-weight: bold;
-    letter-spacing: 3px;
     color: #00d9ff;
-    text-shadow: 0 0 20px rgba(0, 217, 255, 0.4);
+    text-shadow: 0 0 15px rgba(0, 217, 255, 0.4);
     font-variant-numeric: tabular-nums;
+    margin: 15px 0;
 }
 
-.period {
+#period {
     color: #00d9ff;
-    font-size: 18px;
-    margin-top: 8px;
+    margin: 8px;
 }
 
-.divider {
-    width: 70%;
-    height: 1px;
-    background: #263449;
-    margin: 30px auto;
+#day {
+    font-size: 23px;
+    margin-top: 15px;
 }
 
-.day {
-    font-size: 28px;
-    font-weight: bold;
-}
-
-.date {
-    margin-top: 10px;
-    color: #9ca3af;
-    font-size: 16px;
+#date {
+    color: #94a3b8;
+    margin: 10px;
 }
 
 .buttons {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
-    gap: 12px;
-    margin-top: 40px;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 button {
-    padding: 13px 20px;
-    border: 1px solid #00d9ff;
-    border-radius: 10px;
     background: transparent;
     color: #00d9ff;
+    border: 1px solid #00d9ff;
+    padding: 11px 17px;
+    border-radius: 9px;
     cursor: pointer;
-    font-size: 14px;
-    transition: 0.3s;
+    transition: 0.2s;
 }
 
 button:hover {
@@ -111,23 +97,87 @@ button:hover {
     color: #080b14;
 }
 
-.footer {
-    margin-top: 45px;
+.timer-inputs {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+input {
+    width: 110px;
+    padding: 12px;
+    background: #080b14;
+    color: white;
+    border: 1px solid #263449;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 16px;
+}
+
+#timerStatus {
+    color: #94a3b8;
+    margin-top: 12px;
+}
+
+h3 {
+    margin: 15px 0;
+}
+
+#laps {
+    list-style: none;
+    max-height: 120px;
+    overflow-y: auto;
+    color: #94a3b8;
+}
+
+#laps li {
+    padding: 8px;
+    border-bottom: 1px solid #263449;
+}
+
+.world-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.city {
+    background: #080b14;
+    padding: 18px 8px;
+    border-radius: 12px;
+    border: 1px solid #263449;
+}
+
+.city h3 {
+    color: #94a3b8;
+    font-size: 15px;
+}
+
+.city p {
+    color: #00d9ff;
+    font-size: 20px;
+    font-weight: bold;
+    font-variant-numeric: tabular-nums;
+}
+
+footer {
+    text-align: center;
     color: #64748b;
-    font-size: 10px;
+    padding: 35px 10px;
+    font-size: 12px;
     letter-spacing: 2px;
 }
 
-@media (max-width: 480px) {
-    .clock-card {
-        padding: 35px 15px;
+footer p {
+    margin-top: 10px;
+}
+
+@media (max-width: 700px) {
+    main {
+        grid-template-columns: 1fr;
     }
 
-    .top {
-        font-size: 11px;
-    }
-
-    .day {
-        font-size: 23px;
+    header h1 {
+        font-size: 22px;
     }
 }
