@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dark Clock Dashboard 2.0</title>
+    <title>Dark Clock Dashboard 2.1</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,7 +14,6 @@
 </header>
 
 <main>
-
     <!-- DIGITAL CLOCK -->
     <section class="card">
         <h2>🌐 Digital Clock</h2>
@@ -47,11 +45,8 @@
         <h2>⏳ Countdown Timer</h2>
 
         <div class="timer-inputs">
-            <input id="minutes" type="number"
-                min="0" max="999" value="5" placeholder="Minutes">
-
-            <input id="seconds" type="number"
-                min="0" max="59" value="0" placeholder="Seconds">
+            <input id="minutes" type="number" min="0" max="999" value="5" placeholder="Minutes">
+            <input id="seconds" type="number" min="0" max="59" value="0" placeholder="Seconds">
         </div>
 
         <div id="countdown" class="big-time">05:00</div>
@@ -63,6 +58,7 @@
         </div>
 
         <p id="timerStatus">Ready to start</p>
+        <p class="sound-note">🔔 A sound plays when the timer finishes.</p>
     </section>
 
     <!-- WORLD CLOCK -->
@@ -70,7 +66,6 @@
         <h2>🌍 World Clock</h2>
 
         <div class="world-grid">
-
             <div class="city">
                 <h3>Hyderabad 🇮🇳</h3>
                 <p id="india">--:--:--</p>
@@ -95,18 +90,18 @@
                 <h3>Sydney 🇦🇺</h3>
                 <p id="sydney">--:--:--</p>
             </div>
-<div class="city">
-    <h3>Barcelona 🇪🇸</h3>
-    <p id="barcelona">--:--:--</p>
-</div>
+
+            <div class="city">
+                <h3>Barcelona 🇪🇸</h3>
+                <p id="barcelona">--:--:--</p>
+            </div>
         </div>
     </section>
-
 </main>
 
 <footer>
     MADE WITH HTML, CSS AND JAVASCRIPT
-    <p>Dark Clock Dashboard 2.0</p>
+    <p>Dark Clock Dashboard 2.1</p>
 </footer>
 
 <script src="script.js"></script>
